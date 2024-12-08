@@ -1,0 +1,137 @@
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://car-dealership.com/wsdl"
+    xmlns:tns="http://car-dealership.com/wsdl">
+
+    <types>
+        <xs:schema targetNamespace="http://car-dealership.com/wsdl">
+            <xs:element name="Car">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="make" type="xs:string" />
+                        <xs:element name="model" type="xs:string" />
+                        <xs:element name="year" type="xs:int" />
+                        <xs:element name="color" type="xs:string" />
+                        <xs:element name="kms" type="xs:int" />
+                        <xs:element name="vin" type="xs:string" />
+                        <xs:element name="price" type="xs:decimal" />
+                        <xs:element name="images" type="xs:string" maxOccurs="4" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </types>
+
+    <message name="GetCarsRequest" />
+    <message name="GetCarsResponse">
+        <part name="cars" element="tns:Car" />
+    </message>
+
+    <message name="GetCarByIdRequest">
+        <part name="carId" type="xs:string" />
+    </message>
+    <message name="GetCarByIdResponse">
+        <part name="car" element="tns:Car" />
+    </message>
+
+    <message name="CreateCarRequest">
+        <part name="car" element="tns:Car" />
+    </message>
+    <message name="CreateCarResponse">
+        <part name="status" type="xs:string" />
+    </message>
+
+    <message name="UpdateCarRequest">
+        <part name="carId" type="xs:string" />
+        <part name="car" element="tns:Car" />
+    </message>
+    <message name="UpdateCarResponse">
+        <part name="status" type="xs:string" />
+    </message>
+
+    <message name="DeleteCarRequest">
+        <part name="carId" type="xs:string" />
+    </message>
+    <message name="DeleteCarResponse">
+        <part name="status" type="xs:string" />
+    </message>
+
+    <portType name="CarService">
+        <operation name="GetCars">
+            <input message="tns:GetCarsRequest" />
+            <output message="tns:GetCarsResponse" />
+        </operation>
+        <operation name="GetCarById">
+            <input message="tns:GetCarByIdRequest" />
+            <output message="tns:GetCarByIdResponse" />
+        </operation>
+        <operation name="CreateCar">
+            <input message="tns:CreateCarRequest" />
+            <output message="tns:CreateCarResponse" />
+        </operation>
+        <operation name="UpdateCar">
+            <input message="tns:UpdateCarRequest" />
+            <output message="tns:UpdateCarResponse" />
+        </operation>
+        <operation name="DeleteCar">
+            <input message="tns:DeleteCarRequest" />
+            <output message="tns:DeleteCarResponse" />
+        </operation>
+    </portType>
+
+    <binding name="CarServiceBinding" type="tns:CarService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <operation name="GetCars">
+            <soap:operation soapAction="http://car-dealership.com/GetCars" />
+            <input>
+                <soap:body use="literal" />
+            </input>
+            <output>
+                <soap:body use="literal" />
+            </output>
+        </operation>
+        <operation name="GetCarById">
+            <soap:operation soapAction="http://car-dealership.com/GetCarById" />
+            <input>
+                <soap:body use="literal" />
+            </input>
+            <output>
+                <soap:body use="literal" />
+            </output>
+        </operation>
+        <operation name="CreateCar">
+            <soap:operation soapAction="http://car-dealership.com/CreateCar" />
+            <input>
+                <soap:body use="literal" />
+            </input>
+            <output>
+                <soap:body use="literal" />
+            </output>
+        </operation>
+        <operation name="UpdateCar">
+            <soap:operation soapAction="http://car-dealership.com/UpdateCar" />
+            <input>
+                <soap:body use="literal" />
+            </input>
+            <output>
+                <soap:body use="literal" />
+            </output>
+        </operation>
+        <operation name="DeleteCar">
+            <soap:operation soapAction="http://car-dealership.com/DeleteCar" />
+            <input>
+                <soap:body use="literal" />
+            </input>
+            <output>
+                <soap:body use="literal" />
+            </output>
+        </operation>
+    </binding>
+
+    <service name="CarService">
+        <port name="CarServicePort" binding="tns:CarServiceBinding">
+            <soap:address location="http://localhost:5000/api" />
+        </port>
+    </service>
+</definitions>
